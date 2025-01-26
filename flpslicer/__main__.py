@@ -50,6 +50,8 @@ def main():
     args = parser.parse_args()
 
     output_dir = Path(args.output) if args.output else Path(args.input).parent
+    if not output_dir.exists():
+        output_dir.mkdir(parents=True)
 
     # Analyse FLP file
     flp_result = get_flp_slices(
