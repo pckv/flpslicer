@@ -13,7 +13,7 @@ class Sample:
     path: Path
     '''Path to the sample.'''
 
-    slice: tuple[int, int] | None
+    slice: tuple[float, float] | None
     '''Optional slice of the sample.'''
 
     def __eq__(self, other):

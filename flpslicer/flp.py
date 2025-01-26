@@ -51,7 +51,7 @@ def get_flp_slices(
         for item in track:
             if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) and item.channel.sample_path is not None:
                 sample_path = _get_sample_path(item.channel.sample_path, samples_dir)
-                sample = Sample(sample_index, sample_path, item.offsets)
+                sample = Sample(sample_index, sample_path, _get_slice(item.offsets))
 
                 if sample in samples:
                     sample = next(s for s in samples if s == sample)
@@ -105,3 +105,11 @@ def _get_tracks(arrangement: Arrangement, tracks: list[int] | None = None):
         return list(track for track in arrangement.tracks if len(track) and track.enabled)
     
     return list(track for track in arrangement.tracks if track.iid in tracks)
+
+
+def _get_slice(offsets: tuple[float, float]):
+    '''Returns the slice of the sample or None if the slice is invalid.'''
+    if offsets[0] >= 0 and offsets[1] >= 0:
+        return offsets
+
+    return None
