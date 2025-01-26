@@ -24,14 +24,12 @@ Future version may include MIDI-support with some extra steps.
 1. Export stems for your finished and mixed track by separating every sound that should be keysounded
 2. Create a new project and add your stems to each track
    > :warning: You can also create a new arrangement in your song's project file, but the tool might encounter problems when loading it. The tool uses the current arrangement used when saving by default
-3. Name every track
-   > :warning: The name of a track is currently not used by the tool, but a name is required to discover which tracks are used in the project file
-4. Use the slice tool to slice every stem and delete silent parts
+3. Use the slice tool to slice every stem and delete silent parts
    > :warning: The tool currently doesn't support trimming silence, so you're encouraged to do it manually in the project file
-6. Optionally optimise your exported samples by re-using slices for your stems. Use this for repeated patterns/loops and percussion
-7. Enable every track you want to include as keysounds
+4. Optionally optimise your exported samples by re-using slices for your stems. Use this for repeated patterns/loops and percussion
+5. Enable every track you want to include as keysounds
    > 🗣️ You can disable tracks for stems that you may want to keep in the background. This is useful if you've exceeded the limit of samples you can use in a BMS file. Simply move them to a disabled track, or disable the track entirely
-8. Save the file
+6. Save the file
 
 Here's what your project file should look like. All stems in this one are enabled and will be exported by default.
 

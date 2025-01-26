@@ -67,7 +67,7 @@ def get_flp_slices(
     return FlpSlicerResult(
         arrangements=[FlpArrangement(arrangement.iid, arrangement.name) for arrangement in project.arrangements],
         selected_arrangement=arrangement.iid,
-        arrangement_tracks=[FlpTrack(track.iid, track.name) for track in _get_tracks(arrangement)],
+        arrangement_tracks=[FlpTrack(track.iid, track.name or f'Track {track.iid}') for track in _get_tracks(arrangement)],
         selected_tracks=[track.iid for track in tracks],
         samples=samples, 
         track_samples=track_samples)
@@ -100,6 +100,6 @@ def _get_arrangement(project: Project, arrangement: int | None = None):
 def _get_tracks(arrangement: Arrangement, tracks: list[int] | None = None):
     '''Returns the tracks with the given indices or all tracks.'''
     if tracks is None:
-        return list(track for track in arrangement.tracks if track.name is not None and track.enabled)
+        return list(track for track in arrangement.tracks if len(track) and track.enabled)
     
     return list(track for track in arrangement.tracks if track.iid in tracks)
