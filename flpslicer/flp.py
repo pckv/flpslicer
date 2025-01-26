@@ -100,6 +100,6 @@ def _get_arrangement(project: Project, arrangement: int | None = None):
 def _get_tracks(arrangement: Arrangement, tracks: list[int] | None = None):
     '''Returns the tracks with the given indices or all tracks.'''
     if tracks is None:
-        return list(track for track in arrangement.tracks if track.name is not None)
+        return list(track for track in arrangement.tracks if track.name is not None and track.enabled)
     
     return list(track for track in arrangement.tracks if track.iid in tracks)
