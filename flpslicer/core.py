@@ -25,7 +25,7 @@ class TrackSample:
     '''A sample in a track.'''
 
     track: int
-    '''The track index.'''
+    '''The track index based on selected tracks.'''
 
     position: int
     '''The position in the track in 192 PPQ.'''

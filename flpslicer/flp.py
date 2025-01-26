@@ -46,6 +46,7 @@ def get_flp_slices(
     samples: list[Sample] = []
     track_samples: list[TrackSample] = []
 
+    track_index = 0
     for track in tracks:
         for item in track:
             if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) and item.channel.sample_path is not None:
@@ -59,10 +60,11 @@ def get_flp_slices(
                     sample_index += 1
                 
                 track_samples.append(TrackSample(
-                    track=track.iid,
+                    track=track_index,
                     position=item.position,
                     sample=sample,
                 ))
+        track_index += 1
 
     return FlpSlicerResult(
         arrangements=[FlpArrangement(arrangement.iid, arrangement.name) for arrangement in project.arrangements],

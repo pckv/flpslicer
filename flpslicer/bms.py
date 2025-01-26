@@ -2,6 +2,7 @@ from .core import TrackSample, TRACK_PPQ
 
 
 BMS_PPQ = 48  # 192 / 4
+FIRST_TRACK = 27
 
 
 def get_note_ibmsc_clipboard_data(track_samples: list[TrackSample]):
@@ -13,6 +14,6 @@ def get_note_ibmsc_clipboard_data(track_samples: list[TrackSample]):
         if position.is_integer():
             position = int(position)
 
-        output += f'{track_sample.track + 27} {position} {track_sample.sample.id + 1}0000 0 0 0\n'
+        output += f'{track_sample.track + FIRST_TRACK} {position} {track_sample.sample.id + 1}0000 0 0 0\n'
     
     return output
