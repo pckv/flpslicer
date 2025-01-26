@@ -14,7 +14,7 @@ Future version may include MIDI-support with some extra steps.
 4. Optionally create and activate a virtual environment
 5. Install packages using pip
    ```
-   $ pip install -r requirements
+   $ pip install -r requirements.txt
    ```
 
 ## How to use
@@ -34,6 +34,7 @@ Future version may include MIDI-support with some extra steps.
 8. Save the file
 
 Here's what your project file should look like. All stems in this one are enabled and will be exported by default.
+
 ![FL64_D0Wb1h1NkK](https://github.com/user-attachments/assets/8d88b86a-1fba-497d-942b-2075453ded3a)
 
 ### Slicing samples with the tool
