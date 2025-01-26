@@ -34,6 +34,10 @@ def export_sample(
     if sample.slice is not None:
         stream = stream.filter("atrim", start=sample.slice[0] / 1000, end=sample.slice[1] / 1000)
 
-    stream.output(str(output_path)).run(overwrite_output=True, quiet=True)
+    try:
+        stream.output(str(output_path)).run(overwrite_output=True, quiet=True, capture_stderr=True)
+    except ffmpeg.Error as e:
+        print(f'\nError exporting {sample.path}: {e.stderr}')
+        raise e
 
     return output_path
