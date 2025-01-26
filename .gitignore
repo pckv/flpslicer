@@ -1,0 +1,5 @@
+*.flp
+*.bms
+.venv
+__pycache__
+/test.py
