@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-TRACK_PPQ = 192
+TRACK_PPQ = 96
 
 @dataclass
 class Sample:
