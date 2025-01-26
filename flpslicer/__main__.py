@@ -88,6 +88,8 @@ def main():
     if args.to_file:
         with open(args.to_file, 'w') as f:
             f.write(note_data)
+        if not args.quiet:
+            print(f'Exported note data to {args.to_file}')
     else:
         print(note_data)
 
