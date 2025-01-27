@@ -10,7 +10,7 @@ from tqdm import tqdm
 from . import __version__
 from .flp import get_flp_slices, FlpSlicerResult
 from .audio import export_samples
-from .bms import get_note_ibmsc_clipboard_data
+from .bms import get_note_ibmsc_clipboard_data, get_sample_id_from_bms_label
 
 
 cli_description = '''
@@ -39,6 +39,7 @@ def main():
     parser.add_argument('-o', '--output', help='Directory for sliced samples', default=None)
     parser.add_argument('--to-file', help='Export note data to a file', default=None)
     parser.add_argument('--samples-dir', help='Optional directory for samples used in the FLP', default=None)
+    parser.add_argument('-i', '--label-offset', help='The first label to use for note data. Defaults to 01', type=get_sample_id_from_bms_label, default=1)
     parser.add_argument('-a', '--arrangement', help='Arrangement index to use', type=int, default=None)
     parser.add_argument('--list-arrangements', help='List all arrangements in the FLP', action='store_true')
     parser.add_argument('-t', '--tracks', help='Track indexes to use', nargs="+", type=int, default=None)
@@ -84,7 +85,7 @@ def main():
         print(f'Exported {len(flp_result.samples)} samples to {output_dir}\n')
 
     # Export note data
-    note_data = get_note_ibmsc_clipboard_data(flp_result.track_clips)
+    note_data = get_note_ibmsc_clipboard_data(flp_result.track_clips, sample_id_offset=args.label_offset)
     if args.to_file:
         with open(args.to_file, 'w') as f:
             f.write(note_data)

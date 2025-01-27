@@ -18,6 +18,7 @@ from .audio import (
 from .bms import (
     BMS_PPQ,
     get_note_ibmsc_clipboard_data,
+    get_sample_id_from_bms_label,
 )
 
 __version__ = '0.1.0'
