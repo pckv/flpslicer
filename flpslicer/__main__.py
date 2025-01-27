@@ -58,8 +58,8 @@ def main():
     flp_result = get_flp_slices(
         args.input,
         samples_dir=args.samples_dir,
-        arrangement=args.arrangement,
-        tracks=args.tracks,
+        selected_arrangement=args.arrangement,
+        selected_tracks=args.tracks,
     )
 
     if args.list_arrangements:

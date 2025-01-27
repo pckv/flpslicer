@@ -50,15 +50,15 @@ def get_flp_slices(
         flp_path: str | Path, 
         *, 
         samples_dir: str | Path | None = None,
-        arrangement: int | None = None,
-        tracks: list[int] | None = None,
+        selected_arrangement: int | None = None,
+        selected_tracks: list[int] | None = None,
     ) -> FlpSlicerResult:
     '''Finds all used audio clips and their sliced samples in the selected tracks of 
     an FL Studio project file.
     '''
     project = pyflp.parse(flp_path)
-    arrangement = _get_arrangement(project, arrangement)
-    tracks = _get_tracks(arrangement, tracks)
+    selected_arrangement = _get_arrangement(project, arrangement=selected_arrangement)
+    selected_tracks = _get_tracks(selected_arrangement, selected_tracks=selected_tracks, only_enabled=True)
 
     samples: list[Sample] = []
     track_clips: list[TrackClip] = []
@@ -67,7 +67,7 @@ def get_flp_slices(
     sample_index = 0
     track_index = 0
 
-    for track in tracks:
+    for track in selected_tracks:
         for item in track:
             if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) and item.channel.sample_path is not None:
                 sample_path = _get_sample_path(item.channel.sample_path, samples_dir)
@@ -88,9 +88,9 @@ def get_flp_slices(
 
     return FlpSlicerResult(
         arrangements=[FlpArrangement(arrangement.iid, arrangement.name) for arrangement in project.arrangements],
-        selected_arrangement=arrangement.iid,
-        arrangement_tracks=[FlpTrack(track.iid, track.name or f'Track {track.iid}') for track in _get_tracks(arrangement)],
-        selected_tracks=[track.iid for track in tracks],
+        selected_arrangement=selected_arrangement.iid,
+        arrangement_tracks=[FlpTrack(track.iid, track.name or f'Track {track.iid}') for track in _get_tracks(selected_arrangement)],
+        selected_tracks=[track.iid for track in selected_tracks],
         samples=samples, 
         track_clips=track_clips)
 
@@ -111,7 +111,7 @@ def _get_sample_path(sample_path: PosixPath, sample_dir: str | Path | None = Non
     return sample_path
 
 
-def _get_arrangement(project: Project, arrangement: int | None = None):
+def _get_arrangement(project: Project, *, arrangement: int | None = None):
     '''Returns the arrangement with the given index or the current arrangement.'''
     if arrangement is None:
         return project.arrangements.current
@@ -119,12 +119,16 @@ def _get_arrangement(project: Project, arrangement: int | None = None):
     return next(a for a in project.arrangements if a.iid == arrangement)
 
 
-def _get_tracks(arrangement: Arrangement, tracks: list[int] | None = None):
+def _get_tracks(
+        arrangement: Arrangement, 
+        *,
+        selected_tracks: list[int] | None = None, 
+        only_enabled: bool = False):
     '''Returns the tracks with the given indices or all tracks.'''
-    if tracks is None:
-        return list(track for track in arrangement.tracks if len(track) and track.enabled)
+    if selected_tracks is not None:
+        return list(track for track in arrangement.tracks if track.iid in selected_tracks)
     
-    return list(track for track in arrangement.tracks if track.iid in tracks)
+    return list(track for track in arrangement.tracks if len(track) and (not only_enabled or track.enabled))
 
 
 def _get_slice(offsets: tuple[float, float]):
