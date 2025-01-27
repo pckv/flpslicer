@@ -84,7 +84,7 @@ def main():
         print(f'Exported {len(flp_result.samples)} samples to {output_dir}\n')
 
     # Export note data
-    note_data = get_note_ibmsc_clipboard_data(flp_result.track_samples)
+    note_data = get_note_ibmsc_clipboard_data(flp_result.track_clips)
     if args.to_file:
         with open(args.to_file, 'w') as f:
             f.write(note_data)

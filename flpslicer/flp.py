@@ -6,29 +6,44 @@ from pyflp.project import Project
 from pyflp.arrangement import ChannelPLItem, Arrangement
 from pyflp.channel import Sampler
 
-from .core import Sample, TrackSample
+from .core import TRACK_CLIP_POSITION_PPQ, Sample, TrackClip
 
 
 @dataclass
 class FlpArrangement:
+    '''Represents an arrangement in an FL Studio project file.'''
     iid: int
     name: str
 
 
 @dataclass
 class FlpTrack:
+    '''Represents a track in an arrangement in an FL Studio project file.'''
     iid: int
     name: str
 
 
 @dataclass
 class FlpSlicerResult:
+    '''The result of slicing an FL Studio project file.'''
+
     arrangements: list[FlpArrangement]
+    '''All arrangements in the project.'''
+
     selected_arrangement: int
+    '''The index of the selected arrangement.'''
+
     arrangement_tracks: list[FlpTrack]
+    '''All tracks in the selected arrangement.'''
+
     selected_tracks: list[int]
+    '''The indices of the selected tracks.'''
+
     samples: list[Sample]
-    track_samples: list[TrackSample]
+    '''All unique samples in the selected tracks.'''
+
+    track_clips: list[TrackClip]
+    '''All audio clips in the selected tracks. Each clip references a sample.'''
 
 
 def get_flp_slices(
@@ -38,15 +53,20 @@ def get_flp_slices(
         arrangement: int | None = None,
         tracks: list[int] | None = None,
     ) -> FlpSlicerResult:
+    '''Finds all used audio clips and their sliced samples in the selected tracks of 
+    an FL Studio project file.
+    '''
     project = pyflp.parse(flp_path)
     arrangement = _get_arrangement(project, arrangement)
     tracks = _get_tracks(arrangement, tracks)
 
-    sample_index = 0
     samples: list[Sample] = []
-    track_samples: list[TrackSample] = []
+    track_clips: list[TrackClip] = []
 
+    # Keep unique indices of samples and used tracks
+    sample_index = 0
     track_index = 0
+
     for track in tracks:
         for item in track:
             if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) and item.channel.sample_path is not None:
@@ -59,9 +79,9 @@ def get_flp_slices(
                     samples.append(sample)
                     sample_index += 1
                 
-                track_samples.append(TrackSample(
+                track_clips.append(TrackClip(
                     track=track_index,
-                    position=item.position,
+                    position=item.position * TRACK_CLIP_POSITION_PPQ // project.ppq,
                     sample=sample,
                 ))
         track_index += 1
@@ -72,7 +92,7 @@ def get_flp_slices(
         arrangement_tracks=[FlpTrack(track.iid, track.name or f'Track {track.iid}') for track in _get_tracks(arrangement)],
         selected_tracks=[track.iid for track in tracks],
         samples=samples, 
-        track_samples=track_samples)
+        track_clips=track_clips)
 
 
 def _get_sample_path(sample_path: PosixPath, sample_dir: str | Path | None = None):

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-TRACK_PPQ = 96
+TRACK_CLIP_POSITION_PPQ = 960
 
 @dataclass
 class Sample:
@@ -21,14 +21,14 @@ class Sample:
 
 
 @dataclass
-class TrackSample:
-    '''A sample in a track.'''
+class TrackClip:
+    '''An audio clip in a track.'''
 
     track: int
     '''The track index based on selected tracks.'''
 
     position: int
-    '''The position in the track in 192 PPQ.'''
+    '''The position in the track in 960 PPQ.'''
 
     sample: Sample
-    '''The sample.'''
+    '''The sample used in the audio clip.'''

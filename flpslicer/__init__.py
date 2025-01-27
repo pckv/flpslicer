@@ -1,9 +1,9 @@
 '''bmsslicer - Convert sample-based arrangements with slices to BMS notes.'''
 
 from .core import (
-    TRACK_PPQ,
+    TRACK_CLIP_POSITION_PPQ,
     Sample, 
-    TrackSample,
+    TrackClip,
 )
 from .flp import (
     FlpArrangement,
