@@ -49,9 +49,7 @@ def get_flp_slices(
     track_index = 0
     for track in tracks:
         for item in track:
-            if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) \
-                and item.channel.sample_path is not None and not item.muted:
-                
+            if isinstance(item, ChannelPLItem) and isinstance(item.channel, Sampler) and item.channel.sample_path is not None:
                 sample_path = _get_sample_path(item.channel.sample_path, samples_dir)
                 sample = Sample(sample_index, sample_path, _get_slice(item.offsets))
 
