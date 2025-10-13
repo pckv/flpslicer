@@ -1,5 +1,8 @@
 # flpslicer
 
+> [!WARNING]
+> FL Studio 2024 or earlier is requried. This tool does not support project files made in FL Studio 2025 or higher.
+
 This tool can be used to slice BMS samples and copy note data from the stems of a song using FL Studio. Mostly as an alternative to [woslicerII](https://github.com/SayakaIsBaka/woslicerII-english).
 
 Future version may include MIDI-support with some extra steps.
@@ -8,7 +11,7 @@ Future version may include MIDI-support with some extra steps.
 
 > :warning: Installation will be simpler in the future using PIP or an optional installer which includes a GUI tool
 
-1. Install python
+1. Install [Python 3.10](https://www.python.org/downloads/release/python-31011/) (later versions are not supported by pyflp 2.2.1)
 2. Install ffmpeg and make sure it's accessible from a terminal
 3. Clone the repo using git or download and extract the source code and navigate to the folder in a terminal
 4. Optionally create and activate a virtual environment
@@ -33,7 +36,7 @@ Future version may include MIDI-support with some extra steps.
 
 Here's what your project file should look like. All stems in this one are enabled and will be exported by default.
 
-![FL64_D0Wb1h1NkK](https://github.com/user-attachments/assets/8d88b86a-1fba-497d-942b-2075453ded3a)
+![An image showcasing the project file after following the previous instructions](https://github.com/user-attachments/assets/8d88b86a-1fba-497d-942b-2075453ded3a)
 
 ### Slicing samples with the tool
 
