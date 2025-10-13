@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from pathlib import Path, PosixPath
+from pathlib import Path
 
 import pyflp
 from pyflp.project import Project
@@ -95,7 +95,7 @@ def get_flp_slices(
         track_clips=track_clips)
 
 
-def _get_sample_path(sample_path: PosixPath, sample_dir: str | Path | None = None):
+def _get_sample_path(sample_path: Path, sample_dir: str | Path | None = None):
     '''Returns the sample path itself or a path to a sample in a 
     samples directory if provided and the file exists.
     '''
@@ -103,7 +103,7 @@ def _get_sample_path(sample_path: PosixPath, sample_dir: str | Path | None = Non
         return sample_path
 
     filename = Path(str(sample_path).replace("\\", "/").split("/")[-1])
-    samples_dir_path = PosixPath(sample_dir) / filename
+    samples_dir_path = Path(sample_dir) / filename
 
     if samples_dir_path.exists():
         return samples_dir_path
