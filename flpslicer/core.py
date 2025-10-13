@@ -14,7 +14,7 @@ class Sample:
     '''Path to the sample.'''
 
     slice: tuple[float, float] | None
-    '''Optional slice of the sample.'''
+    '''Optional slice of the sample in milliseconds (start, end). If None, the whole sample is used.'''
 
     def __eq__(self, other):
         return self.path == other.path and self.slice == other.slice

@@ -1,4 +1,4 @@
-'''bmsslicer - Convert sample-based arrangements with slices to BMS notes.'''
+'''flpslicer - Convert sample-based FL Studio arrangements with slices to BMS notes.'''
 
 from .core import (
     TRACK_CLIP_POSITION_PPQ,
