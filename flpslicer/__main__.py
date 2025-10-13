@@ -46,6 +46,8 @@ def main():
     parser.add_argument('--list-tracks', help='List all tracks in the FLP for the selected arrangement', action='store_true')
     parser.add_argument('-q', '--quiet', help='Do not print any output', action='store_true')
     parser.add_argument('-v', '--verbose', help='Print more output', action='store_true')
+    parser.add_argument('--fade-in', help='Fade-in duration in milliseconds for exported samples', type=int, default=0)
+    parser.add_argument('--fade-out', help='Fade-out duration in milliseconds for exported samples', type=int, default=0)
     parser.add_argument('--dry-run', help='Do not write any files', action='store_true')
     parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}')
     args = parser.parse_args()
@@ -76,7 +78,7 @@ def main():
         _print_tracks(flp_result, selected_tracks=flp_result.selected_tracks)
 
     # Export track samples
-    export_task = export_samples(flp_result.samples, output_dir, dry_run=args.dry_run)
+    export_task = export_samples(flp_result.samples, output_dir, dry_run=args.dry_run, fade_in=args.fade_in, fade_out=args.fade_out)
     for sample in (tqdm(export_task, desc='Exporting samples') if not args.quiet else export_task):
         if args.verbose:
             print(f'Exported {sample}')
