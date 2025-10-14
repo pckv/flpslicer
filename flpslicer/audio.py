@@ -10,8 +10,8 @@ def export_samples(
         samples: list[Sample], 
         output_dir: str | Path = "output", 
         *, 
-        fade_in: int = 0,
-        fade_out: int = 0,
+        fade_in: float = 0,
+        fade_out: float = 0,
         dry_run: bool = False
     ) -> Generator[Path, None, None]:
     '''Exports the samples to the output directory.'''
@@ -23,8 +23,8 @@ def export_sample(
         sample: Sample, 
         output_dir: str | Path = "output", 
         *, 
-        fade_in: int = 0,
-        fade_out: int = 0,
+        fade_in: float = 0,
+        fade_out: float = 0,
         dry_run: bool = False
     ) -> Path:
     '''Exports the sample to the output directory.'''
